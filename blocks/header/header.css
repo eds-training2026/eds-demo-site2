@@ -97,3 +97,134 @@
   display: inline-flex;
   align-items: center;
 }
+
+/* Main Navigation Container */
+.main-nav {
+  background-color: #ffffff;
+  padding: 15px 24px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--body-font-family, sans-serif);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Flex Row: Splits Logo (left) and Navigation Links (right) */
+.main-nav > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.main-nav > div > div {
+  display: flex;
+  align-items: center;
+}
+
+/* Reset default lists */
+.main-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Top-level Menu Links Layout */
+.main-nav > div > div:nth-child(2) > ul {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+/* Clear default margins from AEM authoring paragraph tags */
+.main-nav li p {
+  margin: 0;
+}
+
+/* Link Styling */
+.main-nav a {
+  text-decoration: none;
+  color: #111111;
+  font-weight: 600;
+  font-size: 16px;
+  transition: color 0.2s ease;
+}
+
+.main-nav a:hover {
+  color: #0056b3;
+}
+
+/* Dropdown Menu Setup */
+.main-nav li {
+  position: relative;
+}
+
+/* Hidden Submenu by Default */
+.main-nav li ul {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
+  min-width: 180px;
+  padding: 10px 0;
+  z-index: 100;
+  border: 1px solid #eaeaea;
+}
+
+/* Show Submenu on Hover */
+.main-nav li:hover > ul {
+  display: block;
+}
+
+/* Dropdown Sub-item Styles */
+.main-nav li ul li {
+  padding: 8px 20px;
+  white-space: nowrap;
+}
+
+.main-nav li ul li p {
+  font-weight: 400;
+  font-size: 14px;
+  color: #333333;
+}
+
+.main-nav li ul li:hover {
+  background-color: #f4f6f8;
+}
+
+.main-nav li ul li:hover p {
+  color: #0056b3;
+}
+
+/* Responsive Layout for Mobile and Tablets */
+@media (max-width: 900px) {
+  .main-nav > div {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .main-nav > div > div:nth-child(2) > ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    width: 100%;
+  }
+
+  /* Make dropdown submenus display statically in mobile stack view */
+  .main-nav li ul {
+    position: static;
+    box-shadow: none;
+    border: none;
+    padding-left: 15px;
+    display: block; 
+    background-color: transparent;
+  }
+
+  .main-nav li ul li {
+    padding: 6px 0;
+  }
+}
