@@ -10,6 +10,7 @@ export default async function decorate(block) {
 
   const navWrapper = document.createElement('div');
   navWrapper.className = 'nav-wrapper';
+  navWrapper.setAttribute('aria-expanded', 'false');
 
   if (fragment) {
     const fragmentSections = fragment.querySelectorAll(':scope > div');
@@ -25,6 +26,22 @@ export default async function decorate(block) {
       const mainBar = document.createElement('div');
       mainBar.className = 'nav-main-bar';
       mainBar.innerHTML = fragmentSections[1].innerHTML;
+
+      const hamburgerButton = document.createElement('button');
+      hamburgerButton.type = 'button';
+      hamburgerButton.className = 'nav-hamburger';
+      hamburgerButton.setAttribute('aria-label', 'Toggle navigation');
+      hamburgerButton.setAttribute('aria-expanded', 'false');
+      hamburgerButton.innerHTML = '<span class="nav-hamburger-icon"></span>';
+      hamburgerButton.addEventListener('click', () => {
+        const isExpanded = navWrapper.getAttribute('aria-expanded') === 'true';
+        const nextState = String(!isExpanded);
+
+        navWrapper.setAttribute('aria-expanded', nextState);
+        hamburgerButton.setAttribute('aria-expanded', nextState);
+      });
+
+      mainBar.prepend(hamburgerButton);
       navWrapper.append(mainBar);
     }
   }
