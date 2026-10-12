@@ -4,79 +4,69 @@ import { loadFragment } from '../fragment/fragment.js';
 export default async function decorate(block) {
   block.textContent = '';
 
-  /* ---------- Load Navigation ---------- */
-
+  /* ---------- Load Navigation & Top Bar Fragments ---------- */
   const navMeta = getMetadata('nav');
-  const navPath = navMeta
-    ? new URL(navMeta, window.location).pathname
-    : '/nav';
-
-  const navFragment = await loadFragment(navPath);
-
-  /* ---------- Load Top Bar ---------- */
-
-  const topFragment = await loadFragment('/header-top');
+  const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  
+  const [navFragment, topFragment] = await Promise.all([
+    loadFragment(navPath),
+    loadFragment('/header-top')
+  ]);
 
   const header = document.createElement('div');
   header.classList.add('custom-header');
 
-  /* ---------- Top Bar ---------- */
-
+  /* ---------- Top Bar Setup ---------- */
   const topBar = document.createElement('div');
   topBar.classList.add('top-bar');
-
-  while (topFragment.firstElementChild) {
-    topBar.append(topFragment.firstElementChild);
+  if (topFragment) {
+    while (topFragment.firstElementChild) {
+      topBar.append(topFragment.firstElementChild);
+    }
   }
 
-  /* ---------- Main Navigation ---------- */
-
+  /* ---------- Main Navigation Setup ---------- */
   const nav = document.createElement('nav');
   nav.classList.add('main-nav');
-
-  while (navFragment.firstElementChild) {
-    nav.append(navFragment.firstElementChild);
+  if (navFragment) {
+    while (navFragment.firstElementChild) {
+      nav.append(navFragment.firstElementChild);
+    }
   }
 
+  // Assign structural classes dynamically
   const classes = ['brand', 'sections', 'tools'];
-
   classes.forEach((name, index) => {
     const section = nav.children[index];
-
     if (section) {
       section.classList.add(`nav-${name}`);
     }
   });
 
-  /* ---------- Search Icon ---------- */
-
+  /* ---------- Search Button ---------- */
   const searchBtn = document.createElement('button');
-
   searchBtn.classList.add('search-btn');
-
-  searchBtn.innerHTML = `
-    <span>🔍</span>
-  `;
+  searchBtn.setAttribute('aria-label', 'Search');
+  searchBtn.innerHTML = `<span>🔍</span>`;
 
   /* ---------- Quote Button ---------- */
-
   const quoteBtn = document.createElement('a');
-
   quoteBtn.href = '/contact';
-
   quoteBtn.classList.add('quote-btn');
-
   quoteBtn.textContent = 'Get Quotes';
 
-  const tools = nav.querySelector('.nav-tools');
-
-  if (tools) {
-    tools.append(searchBtn);
-    tools.append(quoteBtn);
+  // Find or fallback create the tools container
+  let tools = nav.querySelector('.nav-tools');
+  if (!tools) {
+    tools = document.createElement('div');
+    tools.classList.add('nav-tools');
+    nav.append(tools);
   }
+  
+  tools.append(searchBtn);
+  tools.append(quoteBtn);
 
   header.append(topBar);
   header.append(nav);
-
   block.append(header);
 }
