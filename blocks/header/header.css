@@ -69,3 +69,31 @@
     gap: 12px;
   }
 }
+
+/* Social Icons Sizing and Alignment */
+.header-top .icon {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  vertical-align: middle;
+  transition: opacity 0.2s ease;
+}
+
+/* Ensure SVGs inherit the white text color */
+.header-top .icon svg,
+.header-top img.icon {
+  fill: currentColor;
+  width: 100%;
+  height: 100%;
+}
+
+/* Hover effect for social links */
+.header-top a:hover .icon {
+  opacity: 0.8;
+}
+
+/* Keep list items inline for social icons */
+.header-top ul li {
+  display: inline-flex;
+  align-items: center;
+}
