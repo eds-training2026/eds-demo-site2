@@ -4,10 +4,45 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
+/* Top Bar Container */
 .top-bar {
   background: #0d5bd7;
   color: #ffffff;
   padding: 12px 30px;
+  font-size: 14px;
+}
+
+/* If Method 1 (List Structure) is used */
+.top-bar ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.top-bar > div > ul {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.top-bar a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.top-bar a:hover {
+  text-decoration: underline;
+}
+
+/* Social icons list inside top-bar */
+.top-bar ul li ul {
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
 
 .main-nav {
@@ -90,5 +125,14 @@
 
   .nav-sections ul {
     gap: 18px;
+  }
+}
+
+/* Mobile Responsiveness for Top Bar */
+@media (max-width: 768px) {
+  .top-bar ul {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
   }
 }
