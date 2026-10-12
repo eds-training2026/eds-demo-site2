@@ -2,138 +2,45 @@ import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 export default async function decorate(block) {
-  block.textContent = '';
-
-  /* ---------- Load Navigation & Top Bar Fragments ---------- */
+  // Load nav fragment from metadata or default to /nav
   const navMeta = getMetadata('nav');
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
+  const fragment = await loadFragment(navPath);
 
-  const [navFragment, topFragment] = await Promise.all([
-    loadFragment(navPath),
-    loadFragment('/header-top'),
-  ]);
+  // Clear block and set up wrapper
+  block.textContent = '';
+  const navWrapper = document.createElement('div');
+  navWrapper.className = 'nav-wrapper';
 
-  const header = document.createElement('div');
-  header.classList.add('custom-header');
+  if (fragment) {
+    const fragmentSections = fragment.querySelectorAll(':scope > div');
+    
+    // Top Bar Section
+    if (fragmentSections[0]) {
+      const topBar = document.createElement('div');
+      topBar.className = 'nav-top-bar';
+      topBar.innerHTML = fragmentSections[0].innerHTML;
+      navWrapper.append(topBar);
+    }
 
-  /* ---------- Top Bar Setup ---------- */
-  const topBar = document.createElement('div');
-  topBar.classList.add('top-bar');
-  if (topFragment) {
-    while (topFragment.firstElementChild) {
-      topBar.append(topFragment.firstElementChild);
+    // Main Navigation Section
+    if (fragmentSections[1]) {
+      const mainBar = document.createElement('div');
+      mainBar.className = 'nav-main-bar';
+      mainBar.innerHTML = fragmentSections[1].innerHTML;
+      navWrapper.append(mainBar);
     }
   }
 
-  /* ---------- Main Navigation Setup ---------- */
-  const nav = document.createElement('nav');
-  nav.classList.add('main-nav');
-
-  const brandWrap = document.createElement('div');
-  brandWrap.classList.add('nav-brand');
-
-  const sectionsWrap = document.createElement('div');
-  sectionsWrap.classList.add('nav-sections');
-
-  const buildNavStructure = (fragment) => {
-    if (!fragment) return;
-
-    const source = fragment.firstElementChild || fragment;
-    const list = source.querySelector('ul, ol') || (source.matches('ul, ol') ? source : null);
-
-    if (!list) {
-      while (source.firstElementChild) {
-        brandWrap.append(source.firstElementChild);
-      }
-      return;
+  // Add interactive behaviors (e.g., mobile hamburger menu, dropdown toggles)
+  const navTools = navWrapper.querySelector('.nav-main-bar');
+  if (navTools) {
+    // Add search icon functionality hook if needed
+    const searchLink = navTools.querySelector('a[href*="search"]');
+    if (searchLink) {
+      searchLink.innerHTML = `<svg class="icon icon-search" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20"><path fill="none" stroke="currentColor" stroke-width="2" d="M10.5 18a7.5 7.5 0 1 0 0-15 7.5 7.5 0 0 0 0 15zm7.5-1.5l4.5 4.5"/></svg>`;
     }
-
-    const items = [...list.children];
-    if (!items.length) return;
-
-    const firstItem = items[0];
-    const firstText = firstItem.textContent.trim().toLowerCase();
-
-    if (
-      firstText.includes('brand')
-      || firstText.includes('logo')
-      || firstText.includes('techno')
-      || firstItem.querySelector('img')
-    ) {
-      const brandNode = firstItem.cloneNode(true);
-      brandWrap.append(brandNode);
-      items.shift();
-    }
-
-    const cleanList = document.createElement('ul');
-
-    items.forEach((item) => {
-      const li = document.createElement('li');
-      const itemLink = item.querySelector('a');
-
-      if (itemLink) {
-        const link = document.createElement('a');
-        link.href = itemLink.href || '#';
-        link.textContent = itemLink.textContent.trim();
-        li.append(link);
-      } else {
-        li.textContent = item.textContent.trim();
-      }
-
-      const nestedList = item.querySelector('ul, ol');
-      if (nestedList) {
-        const nestedUl = document.createElement('ul');
-        [...nestedList.children].forEach((childItem) => {
-          const childLi = document.createElement('li');
-          const childLink = childItem.querySelector('a');
-
-          if (childLink) {
-            const link = document.createElement('a');
-            link.href = childLink.href || '#';
-            link.textContent = childLink.textContent.trim();
-            childLi.append(link);
-          } else {
-            childLi.textContent = childItem.textContent.trim();
-          }
-
-          nestedUl.append(childLi);
-        });
-        li.append(nestedUl);
-      }
-
-      cleanList.append(li);
-    });
-
-    sectionsWrap.append(cleanList);
-  };
-
-  buildNavStructure(navFragment);
-  nav.append(brandWrap, sectionsWrap);
-
-  /* ---------- Search Button ---------- */
-  const searchBtn = document.createElement('button');
-  searchBtn.classList.add('search-btn');
-  searchBtn.setAttribute('aria-label', 'Search');
-  searchBtn.innerHTML = '<span>🔍</span>';
-
-  /* ---------- Quote Button ---------- */
-  const quoteBtn = document.createElement('a');
-  quoteBtn.href = '/contact';
-  quoteBtn.classList.add('quote-btn');
-  quoteBtn.textContent = 'Get Quotes';
-
-  // Find or fallback create the tools container
-  let tools = nav.querySelector('.nav-tools');
-  if (!tools) {
-    tools = document.createElement('div');
-    tools.classList.add('nav-tools');
-    nav.append(tools);
   }
 
-  tools.append(searchBtn);
-  tools.append(quoteBtn);
-
-  header.append(topBar);
-  header.append(nav);
-  block.append(header);
+  block.append(navWrapper);
 }
