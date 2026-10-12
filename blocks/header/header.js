@@ -29,68 +29,86 @@ export default async function decorate(block) {
   const nav = document.createElement('nav');
   nav.classList.add('main-nav');
 
+  const brandWrap = document.createElement('div');
+  brandWrap.classList.add('nav-brand');
+
+  const sectionsWrap = document.createElement('div');
+  sectionsWrap.classList.add('nav-sections');
+
   const buildNavStructure = (fragment) => {
     if (!fragment) return;
 
     const source = fragment.firstElementChild || fragment;
-    const sourceList = source.querySelector('ul, ol') || (source.matches('ul, ol') ? source : null);
+    const list = source.querySelector('ul, ol') || (source.matches('ul, ol') ? source : null);
 
-    const brandWrap = document.createElement('div');
-    brandWrap.classList.add('nav-brand');
-
-    const sectionsWrap = document.createElement('div');
-    sectionsWrap.classList.add('nav-sections');
-
-    const toolsWrap = document.createElement('div');
-    toolsWrap.classList.add('nav-tools');
-
-    if (!sourceList) {
+    if (!list) {
       while (source.firstElementChild) {
-        const child = source.firstElementChild;
-        if (child.matches('h1, h2, h3, h4, p, a, ul, ol, div')) {
-          if (child.matches('ul, ol')) {
-            sectionsWrap.append(child.cloneNode(true));
-          } else {
-            brandWrap.append(child.cloneNode(true));
-          }
-        } else {
-          brandWrap.append(child.cloneNode(true));
-        }
+        brandWrap.append(source.firstElementChild);
       }
-      nav.append(brandWrap, sectionsWrap, toolsWrap);
       return;
     }
 
-    const list = sourceList.cloneNode(true);
     const items = [...list.children];
+    if (!items.length) return;
 
-    if (items.length) {
-      const firstItem = items[0];
-      const firstText = firstItem.textContent.trim().toLowerCase();
+    const firstItem = items[0];
+    const firstText = firstItem.textContent.trim().toLowerCase();
 
-      if (firstText.includes('brand') || firstText.includes('logo')) {
-        const brandNode = firstItem.cloneNode(true);
-        const brandLink = brandNode.querySelector('a') || brandNode;
-        if (brandLink && brandLink.tagName !== 'A') {
-          const link = document.createElement('a');
-          link.href = '#';
-          link.textContent = brandNode.textContent.trim() || 'Brand';
-          brandWrap.append(link);
-        } else {
-          brandWrap.append(brandNode);
-        }
-        items.shift();
-      }
+    if (
+      firstText.includes('brand')
+      || firstText.includes('logo')
+      || firstText.includes('techno')
+      || firstItem.querySelector('img')
+    ) {
+      const brandNode = firstItem.cloneNode(true);
+      brandWrap.append(brandNode);
+      items.shift();
     }
 
-    const navList = document.createElement('ul');
-    items.forEach((item) => navList.append(item));
-    sectionsWrap.append(navList);
+    const cleanList = document.createElement('ul');
 
-    nav.append(brandWrap, sectionsWrap, toolsWrap);
+    items.forEach((item) => {
+      const li = document.createElement('li');
+      const itemLink = item.querySelector('a');
+
+      if (itemLink) {
+        const link = document.createElement('a');
+        link.href = itemLink.href || '#';
+        link.textContent = itemLink.textContent.trim();
+        li.append(link);
+      } else {
+        li.textContent = item.textContent.trim();
+      }
+
+      const nestedList = item.querySelector('ul, ol');
+      if (nestedList) {
+        const nestedUl = document.createElement('ul');
+        [...nestedList.children].forEach((childItem) => {
+          const childLi = document.createElement('li');
+          const childLink = childItem.querySelector('a');
+
+          if (childLink) {
+            const link = document.createElement('a');
+            link.href = childLink.href || '#';
+            link.textContent = childLink.textContent.trim();
+            childLi.append(link);
+          } else {
+            childLi.textContent = childItem.textContent.trim();
+          }
+
+          nestedUl.append(childLi);
+        });
+        li.append(nestedUl);
+      }
+
+      cleanList.append(li);
+    });
+
+    sectionsWrap.append(cleanList);
   };
 
   buildNavStructure(navFragment);
+  nav.append(brandWrap, sectionsWrap);
 
   /* ---------- Search Button ---------- */
   const searchBtn = document.createElement('button');
