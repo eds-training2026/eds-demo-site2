@@ -9,39 +9,72 @@
 
 body {
   font-family: Arial, sans-serif;
+  color: #222;
 }
 
 /* =========================
-   TOP BAR
+   HEADER TOP (contact / socials)
+   Matches the HTML structure: .header-top > div > div > ul
 ========================= */
-.top-bar {
+.header-top {
   background: #0d6efd;
   color: #fff;
   font-size: 14px;
   padding: 10px 40px;
 }
 
-.top-bar > div {
+.header-top > div {
   max-width: 1200px;
   margin: auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
+  flex-wrap: wrap;
 }
 
-.top-bar a {
+.header-top > div > div {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.header-top ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.header-top li strong,
+.header-top li a {
   color: #fff;
   text-decoration: none;
-  transition: 0.3s;
+  font-weight: 700;
+  font-size: 14px;
 }
 
-.top-bar a:hover {
-  opacity: 0.8;
+.header-top a {
+  color: #fff;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.header-top a:hover {
+  opacity: 0.9;
+}
+
+.header-top .icon {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+  font-size: 16px;
 }
 
 /* =========================
    MAIN NAVIGATION
+   Matches the HTML structure: .main-nav > div > div (logo + menu)
 ========================= */
 .main-nav {
   background: #fff;
@@ -56,28 +89,31 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0 20px;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-/* =========================
-   LOGO
-========================= */
-.main-nav strong {
+.main-nav > div > div:first-child ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.main-nav > div > div:first-child ul li {
   font-size: 2rem;
   color: #111;
+  font-weight: 700;
   cursor: pointer;
 }
 
-/* =========================
-   MENU
-========================= */
-.main-nav ul {
-  list-style: none;
-}
-
 .main-nav > div > div:nth-child(2) > ul {
+  list-style: none;
   display: flex;
   align-items: center;
   gap: 35px;
+  margin: 0;
+  padding: 0;
 }
 
 .main-nav p {
@@ -97,7 +133,8 @@ body {
 }
 
 /* =========================
-   DROPDOWN
+   DROPDOWN (submenu)
+   submenu markup: top-level li contains UL with li children
 ========================= */
 .main-nav li {
   position: relative;
@@ -113,75 +150,67 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   opacity: 0;
   visibility: hidden;
-  transition: 0.3s ease;
+  transform: translateY(6px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
   z-index: 100;
+  padding: 8px 0;
+  list-style: none;
 }
 
 .main-nav li:hover > ul {
   opacity: 1;
   visibility: visible;
+  transform: translateY(0);
   top: 100%;
 }
 
 .main-nav li ul li {
   border-bottom: 1px solid #eee;
+  padding: 0;
 }
 
 .main-nav li ul li:last-child {
   border-bottom: none;
 }
 
-.main-nav li ul li a {
+.main-nav li ul li a,
+.main-nav li ul li p {
   display: block;
   padding: 12px 18px;
   font-size: 15px;
+  color: #333;
 }
 
 .main-nav li ul li:hover {
   background: #f5f7ff;
 }
 
-/* =========================
-   RIGHT SIDE
-========================= */
-.main-nav > div > div:last-child {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.main-nav > div > div:last-child a:first-child {
-  font-size: 22px;
-}
-
-.main-nav > div > div:last-child a:last-child {
-  background: #0d6efd;
-  color: #fff;
-  padding: 12px 24px;
-  border-radius: 6px;
-  transition: 0.3s;
-}
-
-.main-nav > div > div:last-child a:last-child:hover {
-  background: #0056d2;
-  color: #fff;
+.main-nav li ul li p {
+  margin: 0;
+  font-weight: 500;
 }
 
 /* =========================
    RESPONSIVE
 ========================= */
 @media (max-width: 992px) {
-  .top-bar > div,
+  .header-top > div,
   .main-nav > div {
     flex-direction: column;
     text-align: center;
     padding: 15px;
+    align-items: center;
+  }
+
+  .header-top > div > div {
+    justify-content: center;
   }
 
   .main-nav > div > div:nth-child(2) > ul {
     flex-direction: column;
     gap: 15px;
     margin: 20px 0;
+    width: 100%;
   }
 
   .main-nav li ul {
@@ -191,9 +220,22 @@ body {
     box-shadow: none;
     display: none;
     margin-top: 10px;
+    transform: none;
   }
 
-  .main-nav li:hover > ul {
+  .main-nav li:hover > ul,
+  .main-nav li:focus-within > ul {
     display: block;
   }
+
+  .main-nav li ul li a,
+  .main-nav li ul li p {
+    padding-left: 8%;
+    padding-right: 8%;
+    text-align: left;
+  }
 }
+
+/* small tweaks */
+a { outline: none; }
+a:focus { box-shadow: 0 0 0 3px rgba(13,110,253,0.15); border-radius: 4px; }
