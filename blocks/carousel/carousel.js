@@ -183,4 +183,3 @@ export default function decorate(block) {
   showSlide(0);
   startAutoAdvance();
 }
-`
