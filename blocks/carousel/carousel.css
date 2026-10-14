@@ -213,3 +213,34 @@
   padding: 24px;
   border-radius: 8px;
 }
+
+
+@media (max-width: 768px) {
+  .carousel-item > div > div:last-child {
+    left: 16px;
+    right: 16px;
+    top: auto;
+    bottom: 20px;
+    transform: none;
+
+    max-width: unset;
+    width: auto;
+
+    padding: 16px;
+    border-radius: 6px;
+  }
+
+  .carousel-item > div > div:last-child h1,
+  .carousel-item > div > div:last-child h2,
+  .carousel-item > div > div:last-child h3 {
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .carousel-item > div > div:last-child p {
+    font-size: 14px;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+}
