@@ -150,6 +150,11 @@ export default function decorate(block) {
     }
   });
 
+  row.querySelectorAll(':scope > div').forEach((column, colIdx) => {
+  column.classList.add(`carousel-slide-${colIdx === 0 ? 'image' : 'content'}`);
+  slide.append(column);
+  });
+
   /* Touch Swipe Support */
   let touchStartX = 0;
   let touchEndX = 0;
