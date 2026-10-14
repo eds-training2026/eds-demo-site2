@@ -1,241 +1,337 @@
-/* =========================
+/* ======================
    RESET
-========================= */
-* {
-  margin: 0;
-  padding: 0;
+====================== */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 body {
+  margin: 0;
   font-family: Arial, sans-serif;
-  color: #222;
 }
 
-/* =========================
-   HEADER TOP (contact / socials)
-   Matches the HTML structure: .header-top > div > div > ul
-========================= */
-.header-top {
-  background: #0d6efd;
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ======================
+   WRAPPER
+====================== */
+
+.nav-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #fff;
+}
+
+/* ======================
+   TOP BAR
+====================== */
+
+.nav-top-bar {
+  background: #0066ff;
   color: #fff;
   font-size: 14px;
-  padding: 10px 40px;
 }
 
 .header-top > div {
-  max-width: 1200px;
-  margin: auto;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
   gap: 20px;
-  flex-wrap: wrap;
 }
 
 .header-top > div > div {
   display: flex;
   align-items: center;
-  gap: 20px;
 }
 
 .header-top ul {
-  list-style: none;
   display: flex;
-  gap: 20px;
   align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
-}
-
-.header-top li strong,
-.header-top li a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 14px;
 }
 
 .header-top a {
   color: #fff;
-  text-decoration: none;
-  transition: 0.2s;
-}
-
-.header-top a:hover {
-  opacity: 0.9;
 }
 
 .header-top .icon {
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 8px;
-  font-size: 16px;
+  margin-right: 6px;
 }
 
-/* =========================
-   MAIN NAVIGATION
-   Matches the HTML structure: .main-nav > div > div (logo + menu)
-========================= */
-.main-nav {
+/* ======================
+   MAIN NAV
+====================== */
+
+.nav-main-bar {
   background: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,.08);
+
 }
 
-.main-nav > div {
-  max-width: 1200px;
+.nav-row {
+  max-width: 1280px;
   margin: auto;
-  min-height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   padding: 0 20px;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.main-nav > div > div:first-child ul {
-  list-style: none;
+  min-height: 82px;
   display: flex;
   align-items: center;
-  gap: 12px;
 }
 
-.main-nav > div > div:first-child ul li {
-  font-size: 2rem;
-  color: #111;
-  font-weight: 700;
-  cursor: pointer;
+.nav-brand {
+  flex-shrink: 0;
 }
 
-.main-nav > div > div:nth-child(2) > ul {
-  list-style: none;
+.nav-brand ul {
   display: flex;
   align-items: center;
-  gap: 35px;
-  margin: 0;
-  padding: 0;
 }
 
-.main-nav p {
-  margin: 0;
+.nav-brand img {
+  max-height: 80px;
+  width: auto;
 }
 
-.main-nav a {
-  text-decoration: none;
-  color: #222;
-  font-size: 17px;
-  font-weight: 600;
-  transition: color 0.3s;
+/* ======================
+   MENU
+====================== */
+
+.nav-sections {
+  margin-left: auto;
 }
 
-.main-nav a:hover {
-  color: #0d6efd;
+.nav-sections > ul {
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
-/* =========================
-   DROPDOWN (submenu)
-   submenu markup: top-level li contains UL with li children
-========================= */
-.main-nav li {
+.nav-sections > ul > li {
   position: relative;
 }
 
-.main-nav li ul {
-  position: absolute;
-  top: 120%;
-  left: 0;
-  min-width: 220px;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(6px);
-  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
-  z-index: 100;
-  padding: 8px 0;
-  list-style: none;
+.nav-sections p {
+  margin: 0;
+  cursor: pointer;
+  font-weight: 500;
+  color: #222;
+  transition: .3s;
 }
 
-.main-nav li:hover > ul {
+.nav-sections p:hover {
+  color: #0066ff;
+}
+
+/* ======================
+   DROPDOWN
+====================== */
+
+.nav-drop > p {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.nav-drop > p::after {
+  content: "⌄";
+  font-size: 20px;
+}
+
+.nav-drop > ul {
+  position: absolute;
+  top: calc(100% + 15px);
+  left: 0;
+  min-width: 220px;
+  background: #fffdfd;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.12);
+  opacity: 0;
+  visibility: hidden;
+  transition: .3s;
+  z-index: 10;
+}
+
+.nav-drop:hover > ul {
   opacity: 1;
   visibility: visible;
-  transform: translateY(0);
   top: 100%;
 }
 
-.main-nav li ul li {
-  border-bottom: 1px solid #eee;
-  padding: 0;
+.nav-drop.is-open > ul {
+  opacity: 1;
+  visibility: visible;
 }
 
-.main-nav li ul li:last-child {
+.nav-drop > ul li {
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.nav-drop > ul li:last-child {
   border-bottom: none;
 }
 
-.main-nav li ul li a,
-.main-nav li ul li p {
+.nav-drop > ul li p,
+.nav-drop > ul li a 
+{
   display: block;
-  padding: 12px 18px;
+  padding: 14px 18px;
   font-size: 15px;
-  color: #333;
 }
 
-.main-nav li ul li:hover {
-  background: #f5f7ff;
+.nav-drop >ul li{
+  display: block;
+  padding: 14px 18px;
+  font-size: 15px;
+  
 }
 
-.main-nav li ul li p {
-  margin: 0;
-  font-weight: 500;
+.nav-drop > ul li:hover {
+  background: #f5f8ff;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 992px) {
-  .header-top > div,
-  .main-nav > div {
+/* ======================
+   TOOLS
+====================== */
+
+.nav-tools {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left: 30px;
+}
+
+.nav-search {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #222;
+}
+
+.nav-search:hover {
+  color: #1100ff;
+  
+  border-radius: 100%;
+}
+
+/* ======================
+   HAMBURGER
+====================== */
+
+.nav-hamburger {
+  display: none;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0;
+}
+
+.nav-hamburger span {
+  width: 24px;
+  height: 2px;
+  background: #222;
+  display: block;
+  transition: .3s;
+}
+
+/* ======================
+   TABLET
+====================== */
+
+@media (max-width: 1024px) {
+
+  .nav-hamburger {
+    display: flex;
+  }
+
+  .nav-sections {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .35s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,.08);
+  }
+
+  .nav-wrapper[data-open="true"] .nav-sections {
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  .nav-sections > ul {
     flex-direction: column;
-    text-align: center;
-    padding: 15px;
-    align-items: center;
+    align-items: stretch;
+    gap: 0;
   }
 
-  .header-top > div > div {
-    justify-content: center;
+  .nav-sections > ul > li {
+    border-bottom: 1px solid #eee;
   }
 
-  .main-nav > div > div:nth-child(2) > ul {
-    flex-direction: column;
-    gap: 15px;
-    margin: 20px 0;
-    width: 100%;
+  .nav-sections > ul > li > p {
+    padding: 18px 20px;
   }
 
-  .main-nav li ul {
+  .nav-drop > ul {
     position: static;
     opacity: 1;
     visibility: visible;
     box-shadow: none;
-    display: none;
-    margin-top: 10px;
-    transform: none;
+    border-radius: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease;
   }
 
-  .main-nav li:hover > ul,
-  .main-nav li:focus-within > ul {
-    display: block;
+  .nav-drop.is-open > ul {
+    max-height: 500px;
   }
 
-  .main-nav li ul li a,
-  .main-nav li ul li p {
-    padding-left: 8%;
-    padding-right: 8%;
-    text-align: left;
+  .nav-tools {
+    margin-left: auto;
   }
 }
 
-/* small tweaks */
-a { outline: none; }
-a:focus { box-shadow: 0 0 0 3px rgba(13,110,253,0.15); border-radius: 4px; }
+/* ======================
+   MOBILE
+====================== */
+
+@media (max-width: 768px) {
+
+  .nav-top-bar {
+    display: none;
+  }
+
+  .nav-row {
+    min-height: 70px;
+    padding: 0 15px;
+  }
+
+  .nav-brand .icon-logo {
+    font-size: 28px;
+  }
+
+  .nav-sections > ul > li > p {
+    font-size: 16px;
+  }
+}

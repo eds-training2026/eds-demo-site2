@@ -13,7 +13,7 @@
 }
 
 .cards .cards-card-body {
-  margin: 16px;
+  margin: 0px;
 }
 
 .cards .cards-card-image {
@@ -21,7 +21,16 @@
 }
 
 .cards > ul > li img {
-  width: 100%;
+  max-width: 100%;
+  width: 100px;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+.cards > ul > li > div {
+  background: #fff;
+  border-radius: 12px;
+  text-align: center;
+  padding: 10px 10px;
+}
+
