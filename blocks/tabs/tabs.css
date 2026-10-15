@@ -1,23 +1,28 @@
 /* ---------- Tabs ---------- */
 .tabs {
-  width: 100%;
   --tab-active: #0057d8;
   --tab-border: #dadada;
+  --tab-gap: 12px;
+  --img-gap: 20px;
+
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
-/* Tab buttons: centered, wrap onto new lines */
+/* ----- Tab buttons ----- */
 .tabs .tabs-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: var(--tab-gap);
   margin: 0 0 24px;
   padding: 0;
 }
 
 .tabs .tabs-list button.tabs-tab {
   margin: 0;
-  padding: 0.75em 1.5em;
+  padding: 0.8em 1.5em;
   background: #fff;
   border: 1px solid var(--tab-border);
   border-radius: 6px;
@@ -33,7 +38,6 @@
 .tabs .tabs-list button.tabs-tab:hover {
   border-color: var(--tab-active);
   color: var(--tab-active);
-  background: #fff;
 }
 
 .tabs .tabs-list button.tabs-tab[aria-selected="true"] {
@@ -47,121 +51,33 @@
   outline-offset: 2px;
 }
 
-/* Panels: only the active one is shown */
+/* ----- Panel is the grid (mobile: 1 column) ----- */
+.tabs .tabs-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--img-gap);
+  width: 100%;
+}
+
 .tabs .tabs-panel[aria-hidden="true"] {
   display: none;
 }
 
-/* Images stacked one by one, full width */
-.tabs .tabs-panel > div {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
+/* Flatten every wrapper so each picture becomes a grid item */
+.tabs .tabs-panel div,
 .tabs .tabs-panel p,
-.tabs .tabs-panel picture {
-  display: block;
-  width: 100%;
+.tabs .tabs-panel ul,
+.tabs .tabs-panel li {
+  display: contents;
   margin: 0;
-}
-
-.tabs .tabs-panel img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  object-fit: contain;
-}
-
-@media (width >= 600px) {
-  .tabs .tabs-list button.tabs-tab {
-    font-size: var(--body-font-size-m);
-  }
-}
-
-@media (width >= 900px) {
-  .tabs .tabs-list {
-    gap: 16px;
-    margin-bottom: 32px;
-  }
-
-  .tabs .tabs-panel > div {
-    gap: 32px;
-  }
-}
-
-
-
-
-/* ---------- Tabs ---------- */
-.tabs {
-  width: 100%;
-  --tab-active: #0057d8;
-  --tab-border: #dadada;
-}
-
-/* Tab buttons: centered, wrap onto new lines */
-.tabs .tabs-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-  margin: 0 0 24px;
   padding: 0;
 }
 
-.tabs .tabs-list button.tabs-tab {
-  margin: 0;
-  padding: 0.75em 1.5em;
-  background: #fff;
-  border: 1px solid var(--tab-border);
-  border-radius: 6px;
-  color: #333;
-  font-size: var(--body-font-size-s);
-  font-weight: 400;
-  line-height: 1.2;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
-}
-
-.tabs .tabs-list button.tabs-tab:hover {
-  border-color: var(--tab-active);
-  color: var(--tab-active);
-  background: #fff;
-}
-
-.tabs .tabs-list button.tabs-tab[aria-selected="true"] {
-  background: var(--tab-active);
-  border-color: var(--tab-active);
-  color: #fff;
-}
-
-.tabs .tabs-list button.tabs-tab:focus-visible {
-  outline: 2px solid var(--tab-active);
-  outline-offset: 2px;
-}
-
-/* Panels: only the active one is shown */
-.tabs .tabs-panel[aria-hidden="true"] {
-  display: none;
-}
-
-/* Mobile: images stacked one by one, full width */
-.tabs .tabs-panel > div {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.tabs .tabs-panel p {
-  margin: 0;
-}
-
 .tabs .tabs-panel picture {
   display: block;
   width: 100%;
+  min-width: 0;
+  margin: 0;
   overflow: hidden;
   border-radius: 8px;
 }
@@ -171,105 +87,17 @@
   width: 100%;
   height: auto;
   max-width: 100%;
-  object-fit: contain;
-  transition: transform 0.4s ease;
+  object-fit: cover;
 }
 
-/* Tablet and desktop: gallery grid */
+/* ----- Tablet: 2 side by side ----- */
 @media (width >= 600px) {
   .tabs .tabs-list button.tabs-tab {
     font-size: var(--body-font-size-m);
   }
 
-  .tabs .tabs-panel > div {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-  }
-
-  .tabs .tabs-panel picture {
-    aspect-ratio: 4 / 3;
-  }
-
-  .tabs .tabs-panel img {
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-@media (width >= 900px) {
-  .tabs .tabs-list {
-    gap: 16px;
-    margin-bottom: 40px;
-  }
-
-  .tabs .tabs-panel > div {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-
-  .tabs .tabs-panel picture {
-    box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
-  }
-
-  .tabs .tabs-panel picture:hover img {
-    transform: scale(1.06);
-  }
-}
-
-@media (width >= 1200px) {
-  .tabs .tabs-panel > div {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* Mobile: images stacked one by one, full width */
-.tabs .tabs-panel > div {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.tabs .tabs-panel p {
-  margin: 0;
-}
-
-.tabs .tabs-panel picture {
-  display: block;
-  width: 100%;
-  overflow: hidden;
-  border-radius: 8px;
-}
-
-.tabs .tabs-panel img {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  object-fit: contain;
-  transition: transform 0.4s ease;
-}
-
-/* Tablet and desktop: one horizontal row, scrolls sideways */
-@media (width >= 600px) {
-  .tabs .tabs-list button.tabs-tab {
-    font-size: var(--body-font-size-m);
-  }
-
-  .tabs .tabs-panel > div {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 20px;
-    padding-bottom: 12px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* 2 images visible */
-  .tabs .tabs-panel > div > * {
-    flex: 0 0 calc((100% - 20px) / 2);
-    scroll-snap-align: start;
+  .tabs .tabs-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .tabs .tabs-panel picture {
@@ -278,37 +106,21 @@
 
   .tabs .tabs-panel img {
     height: 100%;
-    object-fit: cover;
   }
 }
 
+/* ----- Desktop: 3 side by side with gap ----- */
 @media (width >= 900px) {
+  .tabs {
+    --tab-gap: 16px;
+    --img-gap: 32px;
+  }
+
   .tabs .tabs-list {
-    gap: 16px;
-    margin-bottom: 40px;
+    margin-bottom: 48px;
   }
 
-  .tabs .tabs-panel > div {
-    gap: 24px;
-  }
-
-  /* 3 images visible */
-  .tabs .tabs-panel > div > * {
-    flex: 0 0 calc((100% - 48px) / 3);
-  }
-
-  .tabs .tabs-panel picture {
-    box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
-  }
-
-  .tabs .tabs-panel picture:hover img {
-    transform: scale(1.06);
-  }
-}
-
-@media (width >= 1200px) {
-  /* 4 images visible */
-  .tabs .tabs-panel > div > * {
-    flex: 0 0 calc((100% - 72px) / 4);
+  .tabs .tabs-panel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
