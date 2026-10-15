@@ -221,3 +221,94 @@
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+/* Mobile: images stacked one by one, full width */
+.tabs .tabs-panel > div {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+}
+
+.tabs .tabs-panel p {
+  margin: 0;
+}
+
+.tabs .tabs-panel picture {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.tabs .tabs-panel img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+/* Tablet and desktop: one horizontal row, scrolls sideways */
+@media (width >= 600px) {
+  .tabs .tabs-list button.tabs-tab {
+    font-size: var(--body-font-size-m);
+  }
+
+  .tabs .tabs-panel > div {
+    display: flex;
+    flex-flow: row nowrap;
+    gap: 20px;
+    padding-bottom: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* 2 images visible */
+  .tabs .tabs-panel > div > * {
+    flex: 0 0 calc((100% - 20px) / 2);
+    scroll-snap-align: start;
+  }
+
+  .tabs .tabs-panel picture {
+    aspect-ratio: 16 / 10;
+  }
+
+  .tabs .tabs-panel img {
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (width >= 900px) {
+  .tabs .tabs-list {
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .tabs .tabs-panel > div {
+    gap: 24px;
+  }
+
+  /* 3 images visible */
+  .tabs .tabs-panel > div > * {
+    flex: 0 0 calc((100% - 48px) / 3);
+  }
+
+  .tabs .tabs-panel picture {
+    box-shadow: 0 2px 10px rgb(0 0 0 / 10%);
+  }
+
+  .tabs .tabs-panel picture:hover img {
+    transform: scale(1.06);
+  }
+}
+
+@media (width >= 1200px) {
+  /* 4 images visible */
+  .tabs .tabs-panel > div > * {
+    flex: 0 0 calc((100% - 72px) / 4);
+  }
+}
