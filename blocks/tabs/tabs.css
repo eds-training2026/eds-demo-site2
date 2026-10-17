@@ -117,10 +117,37 @@
   }
 
   .tabs .tabs-list {
-    margin-bottom: 48px;
+    font-size: var(--body-font-size-m);
   }
+}
+
+.tabs .tabs-list button {
+  flex: 0 0 max-content;
+  margin: 0;
+  border: 1px solid var(--dark-color);
+  border-radius: 0;
+  padding: 0.5em;
+  background-color: #949494;
+  color: initial;
+  font-weight: bold;
+  line-height: unset;
+  text-align: initial;
+  text-overflow: unset;
+  overflow: unset;
+  white-space: unset;
+  transition: background-color 0.2s;
+}
+
+.tabs .tabs-list button p {
+  margin: 0;
+}
+
+.tabs .tabs-list button[aria-selected='true'] {
+  border-bottom: 1px solid var(--background-color);
+  background-color: var(--background-color);
+  cursor: initial;
+}
 
   .tabs .tabs-panel {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
-}
