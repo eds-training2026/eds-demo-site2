@@ -5,7 +5,8 @@
   position: relative;
   width: 100vw;
   max-width: 100vw;
-  margin-left: calc(50% - 50vw);
+  margin-left: calc(50% - 51.9vw);
+  margin-right: calc(50% - 51.9vw);
   overflow: hidden;
   aspect-ratio: 16 / 9;
 }
@@ -136,7 +137,7 @@
 .carousel-item > div > div:last-child ul:first-of-type li {
   background: #0560d8;
   color: #fff;
-  padding: 18px 46px;
+  padding: 5px 10px;
   border-radius: 6px;
   font-size: 18px;
   cursor: pointer;

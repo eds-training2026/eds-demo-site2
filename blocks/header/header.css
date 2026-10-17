@@ -27,11 +27,14 @@ a {
 /* ======================
    WRAPPER
 ====================== */
-
-.nav-wrapper {
+header {
   position: sticky;
   top: 0;
   z-index: 1000;
+}
+
+.nav-wrapper {
+  position: relative; /* instead of sticky, since header now handles it */
   background: #fff;
 }
 
