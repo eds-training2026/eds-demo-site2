@@ -151,3 +151,138 @@
   .tabs .tabs-panel {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
+
+
+  /* ---------- Tabs ---------- */
+.tabs {
+  --tab-active: #0057d8;
+  --tab-border: #dadada;
+  --tab-gap: 12px;
+  --img-gap: 20px;
+
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* ----- Tab buttons ----- */
+.tabs .tabs-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--tab-gap);
+  margin: 0 0 24px;
+  padding: 0;
+}
+
+.tabs .tabs-list button.tabs-tab {
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0.8em 1.5em;
+  background: #fff;
+  border: 1px solid var(--tab-border);
+  border-radius: 6px;
+  color: #333;
+  font-size: var(--body-font-size-s);
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.tabs .tabs-list button.tabs-tab p {
+  margin: 0;
+}
+
+.tabs .tabs-list button.tabs-tab:hover {
+  border-color: var(--tab-active);
+  color: var(--tab-active);
+}
+
+.tabs .tabs-list button.tabs-tab[aria-selected="true"] {
+  background: var(--tab-active);
+  border-color: var(--tab-active);
+  color: #fff;
+  cursor: default;
+}
+
+.tabs .tabs-list button.tabs-tab:focus-visible {
+  outline: 2px solid var(--tab-active);
+  outline-offset: 2px;
+}
+
+/* ----- Panel is the grid (MOBILE: 1 column, full-width images) ----- */
+.tabs .tabs-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--img-gap);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.tabs .tabs-panel[aria-hidden="true"] {
+  display: none;
+}
+
+/* Flatten every wrapper so each picture becomes a grid item */
+.tabs .tabs-panel div,
+.tabs .tabs-panel p,
+.tabs .tabs-panel ul,
+.tabs .tabs-panel li {
+  display: contents;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tabs .tabs-panel picture {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.tabs .tabs-panel img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;          /* mobile: natural height, full width */
+  object-fit: cover;
+}
+
+/* ----- Tablet: 2 side by side ----- */
+@media (width >= 600px) {
+  .tabs .tabs-list button.tabs-tab {
+    font-size: var(--body-font-size-m);
+  }
+
+  .tabs .tabs-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tabs .tabs-panel picture {
+    aspect-ratio: 16 / 10;
+  }
+
+  .tabs .tabs-panel img {
+    height: 100%;
+  }
+}
+
+/* ----- Desktop: 3 side by side ----- */
+@media (width >= 900px) {
+  .tabs {
+    --tab-gap: 16px;
+    --img-gap: 32px;
+  }
+
+  .tabs .tabs-panel {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
