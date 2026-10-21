@@ -31,6 +31,7 @@ main,
   margin-right: calc(50% - 50vw);
   overflow: hidden;
   aspect-ratio: 16 / 9;
+  border-top: 5px blue;
 }
 
 /* =========================
