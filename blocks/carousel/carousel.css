@@ -328,3 +328,27 @@ main,
   align-items: center;
   justify-content: center;
 }
+
+
+/* dark shadow behind the text, fading to the right */
+.carousel-item > div::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;               /* above the image, below the text (z-index: 2) */
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.85) 0%,
+    rgba(0, 0, 0, 0.6) 35%,
+    rgba(0, 0, 0, 0.2) 65%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* mobile already has its own dark overlay on the text block */
+@media (max-width: 768px) {
+  .carousel-item > div::before {
+    display: none;
+  }
+}
