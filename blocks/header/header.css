@@ -28,14 +28,20 @@ a {
    WRAPPER
 ====================== */
 header {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
   z-index: 1000;
+  height: auto; /* overrides any fixed height from styles.css */
 }
 
 .nav-wrapper {
-  position: relative; /* instead of sticky, since header now handles it */
+  position: relative;
   background: #fff;
+  margin: 0;          /* remove the calc(50% - 51.9vw) trick */
+  width: 100%;
 }
 
 /* ======================

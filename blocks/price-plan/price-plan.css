@@ -1,0 +1,158 @@
+.price-plan {
+  --pp-blue: #0557d5;
+  --pp-blue-dark: #0447ad;
+  --pp-text: #333;
+  --pp-gap: 30px;
+
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--pp-gap);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* ---------- Card ---------- */
+.price-plan .price-plan-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 32px 24px 0;
+  background: #fafafa;
+  box-shadow: 0 0 40px rgb(0 0 0 / 8%);
+  text-align: center;
+  color: var(--pp-text);
+}
+
+.price-plan .price-plan-title {
+  margin: 0 0 28px;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--pp-text);
+}
+
+/* ---------- Price circle ---------- */
+.price-plan .price-plan-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 200px;
+  height: 200px;
+  max-width: 100%;
+  margin-bottom: 32px;
+  border-radius: 50%;
+  background: var(--pp-blue);
+  color: #fff;
+}
+
+.price-plan .price-plan-value {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  line-height: 1;
+}
+
+.price-plan .price-plan-currency {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.price-plan .price-plan-amount {
+  font-size: 56px;
+  font-weight: 400;
+}
+
+.price-plan .price-plan-period {
+  margin-top: 8px;
+  font-size: 22px;
+  line-height: 1.2;
+}
+
+/* ---------- Feature list ---------- */
+.price-plan .price-plan-features {
+  flex: 1 1 auto;
+  width: 100%;
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.price-plan .price-plan-features li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+.price-plan .price-plan-features li + li {
+  margin-top: 18px;
+}
+
+/* circle-chevron icon, inherits text color */
+.price-plan .price-plan-features li::before {
+  content: '';
+  flex: 0 0 22px;
+  width: 22px;
+  height: 22px;
+  background: #111;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM10.3 7.3L9 8.6 12.4 12 9 15.4l1.3 1.3L15 12z'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* ---------- Button ---------- */
+.price-plan .price-plan-button {
+  display: inline-block;
+  margin-top: auto;
+  padding: 14px 36px;
+  border-radius: 6px 6px 0 0;
+  background: var(--pp-blue);
+  color: #fff;
+  font-size: 20px;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+
+.price-plan .price-plan-button:hover {
+  background: var(--pp-blue-dark);
+  text-decoration: none;
+}
+
+.price-plan .price-plan-button:focus-visible {
+  outline: 2px solid var(--pp-blue);
+  outline-offset: 2px;
+}
+
+/* ---------- Tablet: 2 columns ---------- */
+@media (width >= 600px) {
+  .price-plan {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Desktop: 3 columns ---------- */
+@media (width >= 900px) {
+  .price-plan {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* ---------- Small phones ---------- */
+@media (width < 600px) {
+  .price-plan .price-plan-features li {
+    font-size: 18px;
+  }
+
+  .price-plan .price-plan-price {
+    width: 200px;
+    height: 200px;
+  }
+}
